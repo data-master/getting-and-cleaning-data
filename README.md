@@ -14,7 +14,7 @@ Source dataset https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUC
 
 *  Only vaiables containing mean() & std() are used.
 *  Requires the plyr & reshape2 packages.
-*  Assumes the dataset is unzipped in the current directory.
+*  It does not assume the dataset is unzipped in the current directory and will try to download it if not present
 
 Constructed using the following:
 
