@@ -1,14 +1,37 @@
 library(plyr)
 library(reshape2)
+library(httr) 
 
 ## Goals
 ## 1. each variable should be in one column
 ## 2. each observation of that variable should be in a diferent row
 ## 3. include ids to link tables together
 
+# Download the data
+
+file <- "UCI HAR Dataset.zip"
+url <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
+
+if(!file.exists(file)){
+	print("descargando")
+	download.file(url, file, method="curl")
+}
+
+root.dir <- "UCI\ HAR\ Dataset"
+resultsfolder <- "results"
+if(!file.exists(root.dir)){
+  print("unzip file")
+  unzip(file, list = FALSE, overwrite = TRUE)
+} 
+if(!file.exists(resultsfolder)){
+  print("create results folder")
+  dir.create(resultsfolder)
+} 
+
+
+
 ## Merges the training and the test sets to create one data set.
 
-root.dir <- "UCI HAR Dataset"
 data.set <- list()
 
 message("loading features.txt")
@@ -63,3 +86,4 @@ tidy.mean <- ddply(melt(tidy, id.vars=c("Subject", "Activity")), .(Subject, Acti
 
 write.csv(tidy.mean, file = "tidy.mean.txt",row.names = FALSE)
 write.csv(tidy, file = "tidy.txt",row.names = FALSE)
+
